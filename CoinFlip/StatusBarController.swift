@@ -12,6 +12,7 @@ import AppKit
 class StatusBarController: NSObject, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private var popover: NSPopover!
+    private var menu: NSMenu!
     
     override init() {
         super.init()
@@ -22,8 +23,10 @@ class StatusBarController: NSObject, NSMenuDelegate {
         // Set the icon properties (using a system icon for simplicity)
         if let button = statusItem.button {
             button.image = NSImage(systemSymbolName: "circle.circle", accessibilityDescription: "Coin Flip App")
-            button.action = #selector(togglePopover(_:))
+            button.action = #selector(handleButtonClick(_:))
             button.target = self
+            // Listen for both left and right clicks
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
         
         // Setup Popover
@@ -31,9 +34,29 @@ class StatusBarController: NSObject, NSMenuDelegate {
         popover.contentSize = NSSize(width: 200, height: 100)
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: ContentView())
+        
+        // Setup Menu
+        menu = NSMenu()
+        let quitItem = NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q")
+        quitItem.target = self
+        menu.addItem(quitItem)
     }
     
-    @objc func togglePopover(_ sender: AnyObject?) {
+    @objc func handleButtonClick(_ sender: NSStatusBarButton) {
+        let event = NSApp.currentEvent!
+        
+        if event.type == .rightMouseUp || (event.type == .leftMouseUp && event.modifierFlags.contains(.control)) {
+            // Right click or Control-click: Show menu
+            statusItem.menu = menu
+            statusItem.button?.performClick(nil)
+            statusItem.menu = nil // Reset so left click doesn't show menu automatically next time
+        } else {
+            // Left click: Toggle popover
+            togglePopover(sender)
+        }
+    }
+    
+    func togglePopover(_ sender: AnyObject?) {
         if popover.isShown {
             popover.performClose(sender)
         } else {
@@ -41,5 +64,9 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             }
         }
+    }
+    
+    @objc func quitApp() {
+        NSApplication.shared.terminate(nil)
     }
 }
