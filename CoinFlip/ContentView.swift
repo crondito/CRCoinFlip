@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    // State variable to hold the result of the coin flip
     @State private var result: String = " "
-    // State variable to track if the coin is currently flipping
     @State private var isFlipping: Bool = false
 
     var body: some View {
@@ -18,9 +16,9 @@ struct ContentView: View {
             Button("Flip a Coin") {
                 flipCoin()
             }
-            .buttonStyle(.borderedProminent) // Use a prominent style for macOS
+            .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            .disabled(isFlipping) // Disable button while flipping
+            .disabled(isFlipping)
             
             if isFlipping {
                 ProgressView()
@@ -32,23 +30,21 @@ struct ContentView: View {
                     .font(.title3)
                     .fontWeight(.medium)
                     .padding(.horizontal)
-                    .frame(maxWidth: .infinity) // Ensure text takes full width for centering
+                    .frame(maxWidth: .infinity)
             }
         }
         .padding(15)
-        // Set a fixed, small size for the popover window
+
         .frame(width: 200, height: 100)
     }
 
-    // The core logic for the 50/50 coin flip
     func flipCoin() {
-        // Clear the result immediately to show the "waiting" state
+        // Reset state
         result = " "
         isFlipping = true
         
-        // Execute the coin flip logic after a 1-second delay
+        // Flip after delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // Generate a random integer: 0 or 1
             let randomNumber = Int.random(in: 0...1)
 
             if randomNumber == 0 {
@@ -61,7 +57,6 @@ struct ContentView: View {
     }
 }
 
-// Preview provider for Xcode Canvas (not needed for the app to run)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
