@@ -19,7 +19,7 @@ Open `CRCoinFlip.xcodeproj` in Xcode and press Run.
 
 Release builds can be shared from the GitHub Releases page as a zipped `.app`.
 
-This app is distributed for free and is not notarized. If macOS blocks the app after download, right-click the app and choose **Open**.
+This app is distributed for free and is not notarized. If macOS blocks the app after download, go to **System Settings > Privacy & Security** and choose to open it anyway.
 
 ## Creating a Release Zip
 
@@ -27,6 +27,12 @@ Build the release app:
 
 ```sh
 xcodebuild -project CRCoinFlip.xcodeproj -scheme CRCoinFlip -configuration Release -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO build
+```
+
+Ad-hoc sign the app:
+
+```sh
+codesign --force --deep --sign - "DerivedData/Build/Products/Release/CR Coin Flip.app"
 ```
 
 Create the zip file:
