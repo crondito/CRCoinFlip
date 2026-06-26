@@ -1,6 +1,6 @@
 //
 //  StatusBarController.swift
-//  CoinFlip
+//  CRCoinFlip
 //
 //  Created by Carlos Rodas on 2025/11/28.
 //
@@ -22,7 +22,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
         
         // Set the icon properties (using a system icon for simplicity)
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "circle.circle", accessibilityDescription: "Coin Flip App")
+            button.image = NSImage(systemSymbolName: "circle.circle", accessibilityDescription: "CR Coin Flip")
             button.action = #selector(handleButtonClick(_:))
             button.target = self
             // Listen for both left and right clicks
