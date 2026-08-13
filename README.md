@@ -1,10 +1,10 @@
 # CR Coin Flip
 
-CR Coin Flip is a very simple macOS menu bar app for flipping a coin.
+A tiny native macOS menu bar app for flipping a coin. Click the icon, hit **Flip a Coin**, get **Heads!** or **Tails!** — 50/50, that's it.
 
-Click the menu bar icon, press **Flip a Coin**, and the app will show either **Heads!** or **Tails!**.
+Built with SwiftUI/AppKit (`NSStatusItem`) as a small project to learn native macOS app development.
 
-That is all it does. It is a small SwiftUI/AppKit project made as a basic utility app.
+![CR Coin Flip demo](docs/demo.gif)
 
 ## Requirements
 
@@ -17,31 +17,9 @@ Open `CRCoinFlip.xcodeproj` in Xcode and press Run.
 
 ## Downloading
 
-Release builds can be shared from the GitHub Releases page as a zipped `.app`.
+Release builds are available as a zipped `.app` on the [Releases page](https://github.com/crondito/CRCoinFlip/releases).
 
-This app is distributed for free and is not notarized. If macOS blocks the app after download, go to **System Settings > Privacy & Security** and choose to open it anyway.
-
-## Creating a Release Zip
-
-Build the release app:
-
-```sh
-xcodebuild -project CRCoinFlip.xcodeproj -scheme CRCoinFlip -configuration Release -derivedDataPath ./DerivedData CODE_SIGNING_ALLOWED=NO build
-```
-
-Ad-hoc sign the app:
-
-```sh
-codesign --force --deep --sign - "DerivedData/Build/Products/Release/CR Coin Flip.app"
-```
-
-Create the zip file:
-
-```sh
-ditto -c -k --keepParent "DerivedData/Build/Products/Release/CR Coin Flip.app" "CR-Coin-Flip-macOS.zip"
-```
-
-Upload `CR-Coin-Flip-macOS.zip` to a GitHub Release.
+This app is distributed for free and is not notarized. If macOS blocks it after download, go to **System Settings > Privacy & Security** and choose to open it anyway.
 
 ## License
 
